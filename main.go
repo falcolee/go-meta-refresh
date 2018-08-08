@@ -14,10 +14,11 @@ import (
 	"flag"
 	"github.com/sevlyar/go-daemon"
 	"gopkg.in/urfave/cli.v1"
+	"runtime"
 )
 
 const (
-	usage = "Easy meta refresh tool on UNIX-like systems"
+	usage = "Easy meta refresh tool"
 )
 
 var wg sync.WaitGroup
@@ -36,6 +37,11 @@ type configuration struct {
 func main() {
 	initConf()
 	initLog()
+	var ostype = runtime.GOOS
+	if ostype == "windows"{
+		performOne()
+		return
+	}
 	app := cli.NewApp()
 	app.Version = version
 	app.Name = "go-meta-refresh"
