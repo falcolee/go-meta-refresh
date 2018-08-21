@@ -27,7 +27,7 @@ var (
 	wait	  = 90
 )
 var (
-	logF = flag.String("log", "run.log", "Log file name")
+	logF = flag.String("log", "run"+time.Now().Format("20060102")+".log", "Log file name")
 )
 
 type configuration struct {
@@ -118,7 +118,10 @@ func performOne() {
 		go postScrape(v,v)
 	}
 	wg.Wait() //阻塞等待所有组内成员都执行完毕退栈
-	log.Println("所有任务执行完毕")
+	log.Println("所有任务执行完毕，进入等待")
+	time.Sleep(90)
+	log.Println("开始任务")
+	performOne()
 }
 
 func initLog(){
